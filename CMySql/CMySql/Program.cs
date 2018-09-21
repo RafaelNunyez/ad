@@ -51,6 +51,7 @@ namespace CMySql
 
 			//return fieldNames;
 
+            //Luis
 			List<string> fieldNameList = new List<string>();
 			for (int index = 0; index < dataReader.FieldCount; index++)
 				fieldNameList.Add(dataReader.GetName(index));
