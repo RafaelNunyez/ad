@@ -27,18 +27,20 @@ public partial class MainWindow : Gtk.Window {
         update(new Categoria(3, "categoria 3 " + DateTime.Now));
         //delete();
 
-        IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-        dbCommand.CommandText = "select id, nombre from categoria order by id";
-        IDataReader dataReader = dbCommand.ExecuteReader();
+        //IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
+        //dbCommand.CommandText = "select id, nombre from categoria order by id";
+        //IDataReader dataReader = dbCommand.ExecuteReader();
 
-        //treeView.AppendColumn("ID", new CellRendererText(), "text", 0);
-        //treeView.AppendColumn("Nombre", new CellRendererText(), "text", 1);
+		//treeView.AppendColumn("ID", new CellRendererText(), "text", 0);
+		//treeView.AppendColumn("Nombre", new CellRendererText(), "text", 1);
 
-        //Columns
-        //for (int index = 0; index < dataReader.FieldCount; index++)
-        //treeView.AppendColumn(dataReader.GetName(index), new CellRendererText(), "text", index);
+		//Columns
+		//for (int index = 0; index < dataReader.FieldCount; index++)
+		//treeView.AppendColumn(dataReader.GetName(index), new CellRendererText(), "text", index);
 
-        //Luis
+		//Luis
+		//TreeViewHelper.Fill(treeView, propertyNames, CategoriaDao.List);
+
         CellRendererText cellRendererText = new CellRendererText();
         //    treeView.AppendColumn(
         //        "ID",
@@ -85,16 +87,19 @@ public partial class MainWindow : Gtk.Window {
         ListStore listStore = new ListStore(typeof(Categoria));
         treeView.Model = listStore;
 
+		foreach (Categoria categoria in CategoriaDao.Categorias)
+			listStore.AppendValues(categoria);
+
         //Values
         //Luis
-        while (dataReader.Read())
-            listStore.AppendValues(new Categoria((ulong)dataReader["id"], (string)dataReader["nombre"]));
+        //while (dataReader.Read())
+            //listStore.AppendValues(new Categoria((ulong)dataReader["id"], (string)dataReader["nombre"]));
 
         //Manual Values
         //listStore.AppendValues("1", "cat 1");
         //listStore.AppendValues("2", "cat 2");
 
-        dataReader.Close();
+        //dataReader.Close();
     }
 
     private void insert() {
