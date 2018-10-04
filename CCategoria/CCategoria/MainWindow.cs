@@ -18,85 +18,38 @@ public partial class MainWindow : Gtk.Window {
                 "server=localhost;database=dbprueba;user=root;password=sistemas;ssl-mode=none"
         );
 
-		//new CategoriaWindow();
-
 		App.Instance.DbConnection.Open();
 
 		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+
+		newAction.Activated += delegate {
+            new CategoriaWindow();
+        };
+
+		editAction.Activated += delegate {
+			Console.WriteLine("Id=" + GetId(treeView));
+		};
+
+		treeView.Selection.Changed += delegate {
+            refreshUI();
+        };
   
-  //      //IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-  //      //dbCommand.CommandText = "select id, nombre from categoria order by id";
-  //      //IDataReader dataReader = dbCommand.ExecuteReader();
+		refreshUI();
+    }
 
-		////treeView.AppendColumn("ID", new CellRendererText(), "text", 0);
-		////treeView.AppendColumn("Nombre", new CellRendererText(), "text", 1);
-
-		////Columns
-		////for (int index = 0; index < dataReader.FieldCount; index++)
-		////treeView.AppendColumn(dataReader.GetName(index), new CellRendererText(), "text", index);
-
-		////Luis
-		////TreeViewHelper.Fill(treeView, propertyNames, CategoriaDao.List);
-
-  //      CellRendererText cellRendererText = new CellRendererText();
-  //      //    treeView.AppendColumn(
-  //      //        "ID",
-  //      //        cellRendererText,
-  //      //        delegate (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter) {
-  //      ////Categoria categoria = (Categoria)tree_model.GetValue(iter, 0);
-  //      ////cellRendererText.Text = categoria.Id + "";
-  //      //object model = tree_model.GetValue(iter, 0);
-  //      //object value = model.GetType().GetProperty("Id").GetValue(model);
-  //      //cellRendererText.Text = value + "";
-  //      //        }
-  //      //    );
-
-  //      //    treeView.AppendColumn(
-  //      //        "Nombre",
-  //      //        cellRendererText,
-  //      //        delegate (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter) {
-  //      ////Categoria categoria = (Categoria)tree_model.GetValue(iter, 0);
-  //      ////cellRendererText.Text = categoria.Nombre + "";
-  //      //object model = tree_model.GetValue(iter, 0);
-  //      //            object value = model.GetType().GetProperty("Nombre").GetValue(model);
-  //      //cellRendererText.Text = value + "";
-  //      //    }
-  //      //);
-
-  //      string[] properties = new string[] { "Id", "Nombre" };
-
-  //      foreach (string property in properties) {
-  //          treeView.AppendColumn(
-  //              property,
-  //              cellRendererText,
-  //              delegate (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter) {
-  //                  //Categoria categoria = (Categoria)tree_model.GetValue(iter, 0);
-  //                  //cellRendererText.Text = categoria.Id + "";
-  //                  object model = tree_model.GetValue(iter, 0);
-  //                  object value = model.GetType().GetProperty(property).GetValue(model);
-  //                  cellRendererText.Text = value + "";
-  //              }
-  //          );
-  //      }
-
-  //      //ListStore listStore = new ListStore(typeof(ulong), typeof(string));
-  //      //ListStore listStore = new ListStore(typeof(string), typeof(string));
-  //      ListStore listStore = new ListStore(typeof(Categoria));
-  //      treeView.Model = listStore;
-
-		//foreach (Categoria categoria in CategoriaDao.Categorias)
-			//listStore.AppendValues(categoria);
-
-        ////Values
-        ////Luis
-        ////while (dataReader.Read())
-        //    //listStore.AppendValues(new Categoria((ulong)dataReader["id"], (string)dataReader["nombre"]));
-
-        ////Manual Values
-        ////listStore.AppendValues("1", "cat 1");
-        ////listStore.AppendValues("2", "cat 2");
-
-        ////dataReader.Close();
+	public static object GetId(TreeView treeView) {
+        return Get(treeView, "Id");
+    }
+    public static object Get(TreeView treeView, string propertyName) {
+        if (!treeView.Selection.GetSelected(out TreeIter treeIter))
+            return null;
+        object model = treeView.Model.GetValue(treeIter, 0);
+        return model.GetType().GetProperty(propertyName).GetValue(model);
+    }
+    private void refreshUI() {
+        bool treeViewIsSelected = treeView.Selection.CountSelectedRows() > 0;
+        editAction.Sensitive = treeViewIsSelected;
+        deleteAction.Sensitive = treeViewIsSelected;
     }
 
     private void insert() {
