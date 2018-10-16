@@ -33,6 +33,10 @@ public partial class MainWindow : Gtk.Window {
 			new CategoriaWindow(categoria);
 		};
 
+		refreshAction.Activated += delegate {
+			TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+		};
+
 		treeView.Selection.Changed += delegate {
             refreshUI();
         };
@@ -43,12 +47,14 @@ public partial class MainWindow : Gtk.Window {
 	public static object GetId(TreeView treeView) {
         return Get(treeView, "Id");
     }
+
     public static object Get(TreeView treeView, string propertyName) {
         if (!treeView.Selection.GetSelected(out TreeIter treeIter))
             return null;
         object model = treeView.Model.GetValue(treeIter, 0);
         return model.GetType().GetProperty(propertyName).GetValue(model);
     }
+
     private void refreshUI() {
         bool treeViewIsSelected = treeView.Selection.CountSelectedRows() > 0;
         editAction.Sensitive = treeViewIsSelected;

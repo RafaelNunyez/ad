@@ -15,7 +15,7 @@ public partial class MainWindow
 
 	private global::Gtk.VBox vbox1;
 
-	private global::Gtk.Toolbar toolbar2;
+	private global::Gtk.Toolbar toolbar1;
 
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
@@ -45,15 +45,15 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar2\'><toolitem name=\'newAction\' action=\'newAction\'/><tool" +
+		this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar1\'><toolitem name=\'newAction\' action=\'newAction\'/><tool" +
 				"item name=\'editAction\' action=\'editAction\'/><toolitem name=\'deleteAction\' action" +
 				"=\'deleteAction\'/><toolitem name=\'refreshAction\' action=\'refreshAction\'/></toolba" +
 				"r></ui>");
-		this.toolbar2 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar2")));
-		this.toolbar2.Name = "toolbar2";
-		this.toolbar2.ShowArrow = false;
-		this.vbox1.Add(this.toolbar2);
-		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.toolbar2]));
+		this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
+		this.toolbar1.Name = "toolbar1";
+		this.toolbar1.ShowArrow = false;
+		this.vbox1.Add(this.toolbar1);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.toolbar1]));
 		w2.Position = 0;
 		w2.Expand = false;
 		w2.Fill = false;
