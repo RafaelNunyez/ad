@@ -1,12 +1,13 @@
 ﻿using Gtk;
-using MySql.Data.MySqlClient;
 using System;
-using System.Data;
-using System.Reflection;
 
 using CCategoria;
 using Serpis.Ad;
 using Serpis.Ad.Ventas;
+
+public class EntityDaoCategoria : EntityDao<Categoria> {
+	
+}
 
 public partial class MainWindow : Gtk.Window {
 
@@ -15,7 +16,10 @@ public partial class MainWindow : Gtk.Window {
 
 		Title = "Categoría";
 
-		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+		EntityDaoCategoria entityDaoCategoria = new EntityDaoCategoria();
+
+		//TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, entityDaoCategoria.Enumerable);
 
 		newAction.Activated += delegate {
 			new CategoriaWindow(new Categoria());
