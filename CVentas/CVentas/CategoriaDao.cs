@@ -1,9 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 
 namespace Serpis.Ad.Ventas {
-    public class CategoriaDao {
+	public class EntityDao<TEntity> {
+        public IEnumerable Enumerable {
+            get {
+                ArrayList list = new ArrayList();
+                //TODO implementar
+                return list;
+            }
+        }
+    }
+
+	public class CategoriaDao {
 		private static String selectAll = "select id, nombre from categoria order by id";
 		public static IList<Categoria> Categorias {
 			get {
