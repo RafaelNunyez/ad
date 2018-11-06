@@ -59,11 +59,11 @@ namespace Serpis.Ad {
 				update(entity);
 		}
 
-		public void insert (TEntity entity) {
+		protected void insert (TEntity entity) {
 			//TODO
 		}
 
-		public void update (TEntity entity) {
+		protected void update (TEntity entity) {
 			//TODO
 		}
 
