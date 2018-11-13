@@ -76,12 +76,39 @@ namespace Serpis.Ad {
 				update(entity);
 		}
 
+		protected string insertSql = "insert into {0} ({1}) values ({2})";
+
 		protected void insert (TEntity entity) {
-			//TODO
+			IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
+
+			List<string> fieldsWithoutId = new List<string>();
+			List<string> parameters = new List<string>();
+			for (int index = 1; index < entityPropertyNames.Count; index++) {
+				fieldsWithoutId.Add(entityPropertyNames[index]);
+				parameters.Add("@" + entityPropertyNames[index]);
+			}
+
+
+			string tableName = entityType.Name.ToLower();
+			
+			string fieldNamesCsv = string.Join(", ", fieldsWithoutId).ToLower();
+
+			dbCommand.CommandText = string.Format(insertSql, tableName, fieldNamesCsv, );
+            
+			dbCommand.ExecuteNonQuery();
 		}
 
+		protected string updateSql = "update {0} set {1} where {2} = @id";
+
 		protected void update (TEntity entity) {
-			//TODO
+
+			string tableName = entityType.Name.ToLower();
+
+			List<string> fieldParametersPairs = new List<string>();
+			for (int index = 1; index < entityPropertyNames.Count; index++) {
+				string item = entityPropertyNames[index];
+				fieldParametersPairs.Add(item + "=@" + item);
+			}
 		}
 
 		protected static string deleteSql = "delete from {0} where {1} = @id";
