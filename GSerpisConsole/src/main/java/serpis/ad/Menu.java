@@ -56,7 +56,7 @@ public class Menu {
 		}
 	}
 	
-	private static void invalidOption () {
-		System.out.println("Opción inválida, vuelte a introducir");
-	}
+//	private static void invalidOption () {
+//		System.out.println("Opción inválida, vuelte a introducir");
+//	}
 }
