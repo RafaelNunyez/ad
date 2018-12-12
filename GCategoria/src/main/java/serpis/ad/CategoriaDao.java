@@ -2,6 +2,7 @@ package serpis.ad;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaDao {
@@ -33,6 +34,11 @@ public class CategoriaDao {
 	}
 	
 	public static List<Categoria> getAll() throws SQLException {
-		return null;
+		List<Categoria> categorias = new ArrayList<>();
+		Categoria categoria = new Categoria();
+		categoria.setId(1);
+		categoria.setNombre("Categoria uno");
+		categorias.add(categoria);
+		return categorias;
 	}
 }

@@ -9,7 +9,7 @@ public class CategoriaConsole {
 	}
 	
 	public static void newCategoria(Categoria categoria) {
-			
+		
 	}
 		
 	public static void editCategoria(Categoria categoria) {
@@ -29,7 +29,9 @@ public class CategoriaConsole {
 	}
 	
 	public static void showList(List<Categoria> categorias) {
-		
+		for (Categoria categoria : categorias) {
+			System.out.printf("%4s %s %n", categoria.getId(), categoria.getNombre());
+		}
 	}
 	
 }
