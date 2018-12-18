@@ -31,12 +31,12 @@ public class ScannerHelper {
 		}
 	}
 	
-	public static String getConfirm (String label) {
-		while (true) {
-			System.out.print(label);
-			String confirmQuery = scanner.nextLine();
-			
-			return confirmQuery;
-		}
-	}
+//	public static String getConfirm (String label) {
+//		while (true) {
+//			System.out.print(label);
+//			String confirmQuery = scanner.nextLine();
+//			
+//			return confirmQuery;
+//		}
+//	}
 }

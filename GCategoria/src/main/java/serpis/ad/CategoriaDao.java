@@ -10,13 +10,28 @@ import java.util.List;
 public class CategoriaDao {
 	private static String insertSql = "insert into categoria (nombre) values (?)";
 	private static int insert (Categoria categoria) throws SQLException {
-		PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(insertSql);
-		preparedStatement.setObject(1, categoria.getNombre());
-		return preparedStatement.executeUpdate();
+		try (PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(insertSql)) {
+			preparedStatement.setObject(1, categoria.getNombre());
+			return preparedStatement.executeUpdate();
+		}
 	}
 	
+//	private static int insert (Categoria categoria) throws SQLException {
+//		PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(insertSql);
+//		preparedStatement.setObject(1, categoria.getNombre());
+//		int rowCount = preparedStatement.executeUpdate();
+//		preparedStatement.close();
+//		return rowCount;
+//	}
+	
+	private static String updateSql = "update categoria set nombre = ? where id = ?";
 	private static int update(Categoria categoria) throws SQLException {
-		return -1; //TODO implementar
+		PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(updateSql);
+		preparedStatement.setObject(1, categoria.getNombre());
+		preparedStatement.setObject(2, categoria.getId());
+		int rowCount = preparedStatement.executeUpdate();
+		preparedStatement.close();
+		return rowCount;
 	}
 	
 	/**
@@ -42,17 +57,17 @@ public class CategoriaDao {
 	 * @throws SQLException
 	 */
 	public static Categoria load(long id) throws SQLException {
-		PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(selectWhereId);
-		preparedStatement.setObject(1, id);
-		ResultSet resultSet = preparedStatement.executeQuery();
+		try (PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(selectWhereId)) {
+			preparedStatement.setObject(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+				
+			if (!resultSet.next()) return null;
 			
-		if (resultSet.next()) {
 			Categoria categoria = new Categoria();
 			categoria.setId(resultSet.getLong("id"));
 			categoria.setNombre((String) resultSet.getObject("nombre"));
 			return categoria;
 		}
-		return null;
 	}
 	
 	//Hecho
@@ -64,9 +79,10 @@ public class CategoriaDao {
 	 * @throws SQLException
 	 */
 	public static int delete(long id) throws SQLException {
-		PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(deleteSql);
-		preparedStatement.setObject(1, id);
-		return preparedStatement.executeUpdate();
+		try (PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(deleteSql)) {
+			preparedStatement.setObject(1, id);
+			return preparedStatement.executeUpdate();
+		}
 	}
 	
 	private static final String selectAll = "select id, nombre from categoria";

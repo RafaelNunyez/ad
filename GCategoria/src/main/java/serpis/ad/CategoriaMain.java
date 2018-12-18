@@ -38,8 +38,7 @@ public class CategoriaMain {
 	
 	public static void nuevo() throws SQLException {
 		Categoria categoria = new Categoria();
-		//CategoriaConsole.newCategoria(categoria);
-		categoria.setNombre("nuevo " + LocalDateTime.now());
+		CategoriaConsole.newCategoria(categoria);
 		CategoriaDao.save(categoria);
 	}
 	
