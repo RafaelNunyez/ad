@@ -1,6 +1,7 @@
 package serpis.ad;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,4 +18,20 @@ public class JpaHelper {
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
+	
+	public static <R> R execute (Function<EntityManager, R> function) {
+    	return execute(App.getInstance().getEntityManagerFactory(), function);
+    }
+    
+    public static <R> R execute (EntityManagerFactory entityManagerFactory, Function<EntityManager, R> function) {
+    	EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		R result = function.apply(entityManager);
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		return result;
+    }
 }
