@@ -30,6 +30,7 @@ dependencies {
     
     implementation 'mysql:mysql-connector-java:8.0.13'
     
-    
+    implementation files('../GSerpisConsole/build/libs/GSerpisConsole.jar')
+    implementation files('../HSerpis/build/libs/HSerpis.jar')
 }
 
