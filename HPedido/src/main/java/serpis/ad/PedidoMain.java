@@ -35,9 +35,10 @@ public class PedidoMain {
 //		entityManager.getTransaction().commit();
 //		entityManager.close();
 		
-		List<Categoria> categorias = doInJPA(App.getInstance().getEntityManagerFactory(), entityManager -> {
+		List<Categoria> categorias = JpaHelper.execute2(entityManager -> {
 			return entityManager.createQuery("select c from Categoria c order by id", Categoria.class).getResultList();
 		});
+		
 		System.out.println("Artículo añadido. Pulse Enter para continuar...");
 		new Scanner(System.in).nextLine();
 		
@@ -51,7 +52,7 @@ public class PedidoMain {
 //			return entityManager.find(Articulo.class, 3L);
 //		});
 		
-		Articulo articulo4 = JpaHelper.execute(entityManager -> {
+		Articulo articulo4 = JpaHelper.execute2(entityManager -> {
 			return entityManager.find(Articulo.class, 3L);
 		});
 		
@@ -69,7 +70,7 @@ public class PedidoMain {
 		return pruebaArticulo;
 	}
 	
-	private static void remove (Articulo articulo) {
+	/*private static void remove (Articulo articulo) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		
@@ -80,7 +81,7 @@ public class PedidoMain {
 		
 		entityManager.getTransaction().commit();
 		entityManager.close();
-	}
+	}*/
 	
 	/*private static void doInJPA (EntityManagerFactory entityManagerFactory, Consumer<EntityManager> consumer) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
