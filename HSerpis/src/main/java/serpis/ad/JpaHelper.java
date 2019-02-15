@@ -14,8 +14,13 @@ public class JpaHelper {
 	public static void execute (EntityManagerFactory entityManagerFactory, Consumer<EntityManager> consumer) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
-		consumer.accept(entityManager);
-		entityManager.getTransaction().commit();
+		try {
+			consumer.accept(entityManager);
+			entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			entityManager.getTransaction().rollback();
+			throw ex;
+		}
 		entityManager.close();
 	}
 	
